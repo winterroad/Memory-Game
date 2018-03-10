@@ -33,7 +33,7 @@ Magnificent Memory Game is a project for [Udacity Front-End Web Developer Nanode
 
 ## Short description of the execution
 
-[ ] Game randomizes 8 pictures from pictures (href attr).
+[X] Game randomizes 8 pictures from pictures (href attr).
 [ ] Randomizes positions in the game
 [ ] Cards added to game array twice
 [ ] Stars = 3, view updated
