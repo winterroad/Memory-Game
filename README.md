@@ -33,15 +33,15 @@ Magnificent Memory Game is a project for [Udacity Front-End Web Developer Nanode
 
 ## Short description of the execution
 
-[X] Game randomizes 8 pictures from pictures (href attr).
-[ ] Randomizes positions in the game
-[ ] Cards added to game array twice
+[X] Game randomizes 8 pictures from pictures array.
+[X] Randomizes positions in the game
+[X] Cards added to game array twice
 [ ] Stars = 3, view updated
 [ ] Moves = 0, view updated
 [ ] Status: winning = false
 [ ] When game board ready start timer -> [set start time](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
 [ ] Move functionality: one move is 2 cards visible, classes = unselected, selected, pairedUp.
-[ ] After 2 cards selected, check if href-attribute is the same, feedback, cards back to unselected or pairedUp.
+[ ] After 2 cards selected, check if src-attribute is the same, feedback, cards back to unselected or pairedUp.
 [ ] Check if all cards are pairedUp. If all pairedUp, then winning = true.
 [ ] When winning = true -> modal
 [ ] If playAgain = yes, start game again.
