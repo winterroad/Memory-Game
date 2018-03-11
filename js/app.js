@@ -18,13 +18,15 @@ let move1 = "";
 let move2 = "";
 let pic1 = "";
 let pic2 = "";
-let pairedUp = [];
+/*let pairedUp = [];*/
+let winning = false;
 
 //Lets select the pictures (1 each). After this these are added to game in randomized order (2 each). -> function createGame().
 chosenPictures = generateRandomPictures(cardsInGame);
 
 //Create a game based  on these pictures.
 createGame(chosenPictures);
+startTime = Date.now();
 
 //Add evenlistener to parent. With event delegation, no need to assign every child their own listener.
 game.addEventListener('click', chooseCard);
@@ -106,29 +108,34 @@ function chooseCard(e) {
       pic2 = move2.nextSibling.alt;;
     }
 
-    if (move1!="" && move2!=""){
-      moves++;
-    //Check if the moves are the same picture.
-    if(pic1 == pic2){
-        pairedUp.push([pic1, pic2]);
-        move1.classList.remove("selected");
-        move2.classList.remove("selected");
-        move1.classList.add("paired");
-        move2.classList.add("paired");
-        move1 = "";
-        move2 = "";
-        pic1 = "";
-        pic2 = "";
-    } else {
-        move1.classList.remove("selected");
-        move2.classList.remove("selected");
-        move1.classList.add("unselected");
-        move2.classList.add("unselected");
-        move1 = "";
-        move2 = "";
-        pic1 = "";
-        pic2 = "";
-    }
+setTimeout(updatingClasses, 250);
+
+}
+
+function updatingClasses() {
+
+  if (move1!="" && move2!=""){
+    moves++;
+    move1.classList.remove("selected");
+    move2.classList.remove("selected");
+  //Check if the moves are the same picture.
+  if(pic1 == pic2){
+      /*pairedUp.push([pic1, pic2]);*/
+      pairsFound++;
+      if(pairsFound >= cardsInGame) {
+         endTime = Date.now()-startTime;
+      }
+      move1.classList.add("paired");
+      move2.classList.add("paired");
+  } else {
+    move1.classList.add("unselected");
+    move2.classList.add("unselected");
+  }
+    move1 = "";
+    move2 = "";
+    pic1 = "";
+    pic2 = "";
   }
   }
+
 }
