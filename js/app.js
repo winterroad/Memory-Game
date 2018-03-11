@@ -1,11 +1,11 @@
 //Game- varibale doe snot change. Cards will be added to game.
 const game = document.getElementById("game-container");
 //All picture related divs, src attributes + alts in an Array.
-const allPictures = ["<div class='unselected card'></div><img src='img/no1.svg' alt='Number 1'>", "<div class='unselected card'></div><img src='img/no2.svg' alt='Number 2'>", "<div class='unselected card'></div><img src='img/no3.svg' alt='Number 3'>",
-"<div class='unselected card'></div><img src='img/no4.svg' alt='Number 4'>", "<div class='unselected card'></div><img src='img/no5.svg' alt='Number 5'>", "<div class='unselected card'></div><img src='img/no6.svg' alt='Number 6'>", "<div class='unselected card'></div><img src='img/no7.svg' alt='Number 7'>",
-"<div class='unselected card'></div><img src='img/no8.svg' alt='Number 8'>", "<div class='unselected card'></div><img src='img/no9.svg' alt='Number 9'>", "<div class='unselected card'></div><img src='img/no10.svg' alt='Number 10'>", "<div class='unselected card'></div><img src='img/no11.svg' alt='Number 11'>",
-"<div class='unselected card'></div><img src='img/no12.svg' alt='Number 12'>", "<div class='unselected card'></div><img src='img/no13.svg' alt='Number 13'>", "<div class='unselected card'></div><img src='img/no14.svg' alt='Number 14'>", "<div class='unselected card'></div><img src='img/no15.svg' alt='Number 15'>",
-"<div class='unselected card'></div><img src='img/no16.svg' alt='Number 16'>"];
+const allPictures = ["<div class='card unselected'></div><img src='img/no1.svg' alt='Number 1'>", "<div class='card unselected'></div><img src='img/no2.svg' alt='Number 2'>", "<div class='card unselected'></div><img src='img/no3.svg' alt='Number 3'>",
+"<div class='card unselected'></div><img src='img/no4.svg' alt='Number 4'>", "<div class='card unselected'></div><img src='img/no5.svg' alt='Number 5'>", "<div class='card unselected'></div><img src='img/no6.svg' alt='Number 6'>", "<div class='card unselected'></div><img src='img/no7.svg' alt='Number 7'>",
+"<div class='card unselected'></div><img src='img/no8.svg' alt='Number 8'>", "<div class='card unselected'></div><img src='img/no9.svg' alt='Number 9'>", "<div class='card unselected'></div><img src='img/no10.svg' alt='Number 10'>", "<div class='card unselected'></div><img src='img/no11.svg' alt='Number 11'>",
+"<div class='card unselected'></div><img src='img/no12.svg' alt='Number 12'>", "<div class='card unselected'></div><img src='img/no13.svg' alt='Number 13'>", "<div class='card unselected'></div><img src='img/no14.svg' alt='Number 14'>", "<div class='card unselected'></div><img src='img/no15.svg' alt='Number 15'>",
+"<div class='card unselected'></div><img src='img/no16.svg' alt='Number 16'>"];
 const allPicturesNum = allPictures.length;
 let cardsInGame = 8; //how many different cards . CardsInGame x 2 x <div class="card> (Add randomized src + alt here, from chosenPictures Array)<div>
 let chosenPictures = []; //Randomize pictures and add them in this Array.
@@ -14,7 +14,11 @@ let stars = 3; //Max stars in the beginning.
 let startTime; //Start time, time will start when first click will be made.
 let endTime; //End time, time will stop when pairsFound === cards/2.
 let moves = 0; //Move = 2 cards "turned".
-
+let move1 = "";
+let move2 = "";
+let pic1 = "";
+let pic2 = "";
+let pairedUp = [];
 
 //Lets select the pictures (1 each). After this these are added to game in randomized order (2 each). -> function createGame().
 chosenPictures = generateRandomPictures(cardsInGame);
@@ -89,8 +93,42 @@ function generateRandomPictures(num){
 
 //In choose a card-function card is revealed with class selected, if it is not .selected already.
 function chooseCard(e) {
-  if(e.target && e.target.nodeName == "DIV" && e.target.className == "unselected card"){
+
+  if(e.target && e.target.nodeName == "DIV" && e.target.className == "card unselected"){
     e.target.classList.add("selected");
     e.target.classList.remove("unselected");
+
+    if(move1===""){
+      move1 = e.target;
+      pic1 = move1.nextSibling.alt;
+    } else if (move2==="") {
+      move2 = e.target;
+      pic2 = move2.nextSibling.alt;;
+    }
+
+    if (move1!="" && move2!=""){
+      moves++;
+    //Check if the moves are the same picture.
+    if(pic1 == pic2){
+        pairedUp.push([pic1, pic2]);
+        move1.classList.remove("selected");
+        move2.classList.remove("selected");
+        move1.classList.add("paired");
+        move2.classList.add("paired");
+        move1 = "";
+        move2 = "";
+        pic1 = "";
+        pic2 = "";
+    } else {
+        move1.classList.remove("selected");
+        move2.classList.remove("selected");
+        move1.classList.add("unselected");
+        move2.classList.add("unselected");
+        move1 = "";
+        move2 = "";
+        pic1 = "";
+        pic2 = "";
+    }
+  }
   }
 }

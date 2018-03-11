@@ -35,9 +35,9 @@ h1{
   display: flex;
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
-  -webkit-justify-content: space-around;
-  justify-content: space-around;
-  align-content: space-around;
+  -webkit-justify-content: center;
+  justify-content: center;
+  align-content: center;
   margin: 2rem auto;
   border: 2px solid #fff;
   border-radius: 5px;
@@ -52,8 +52,8 @@ h1{
     -webkit-border-radius: 5px;
     border-radius: 5px;
     border: 5px solid #fff;
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     background-color: #fff;
     color: #333;
     margin: 2rem;
@@ -75,6 +75,10 @@ h1{
       }
 
       .selected {
+        z-index: -1;
+      }
+
+      .paired {
         z-index: -1;
       }
 
