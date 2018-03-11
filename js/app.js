@@ -124,6 +124,7 @@ function updatingClasses() {
       pairsFound++;
       if(pairsFound >= cardsInGame) {
          endTime = Date.now()-startTime;
+         winning = true;
       }
       move1.classList.add("paired");
       move2.classList.add("paired");
