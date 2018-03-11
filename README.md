@@ -33,20 +33,20 @@ Magnificent Memory Game is a project for [Udacity Front-End Web Developer Nanode
 
 ## Short description of the execution
 
--[X] Game randomizes 8 pictures from pictures array.
--[X] Randomizes positions in the game
--[X] Cards added to game array twice
--[X] Cards added to the game board, pictures hidden.
--[ ] Stars = 3, view updated
--[ ] Moves = 0, view updated
--[X] Status: winning = false
--[X] When game board ready start timer -> [set start time](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
--[X] Move functionality: one move is 2 cards visible, classes = unselected, selected. When paired added to pairedUp array, class paired.
--[X] After 2 cards selected, check if alt-attribute is the same, feedback, cards back to unselected or added to pairedUp array, class paired.
--[X] Check if all cards are pairedUp, array length = allCards length. If all pairedUp, then winning = true.
--[ ] When winning = true -> modal
--[ ] If playAgain = yes, start game again.
--[ ] If in any time player presses reset, game starts from the beginning and values are reset.
+* [X] Game randomizes 8 pictures from pictures array.
+* [X] Randomizes positions in the game
+* [X] Cards added to game array twice
+* [X] Cards added to the game board, pictures hidden.
+* [ ] Stars = 3, view updated
+* [ ] Moves = 0, view updated
+* [X] Status: winning = false
+* [X] When game board ready start timer -> [set start time](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
+* [X] Move functionality: one move is 2 cards visible, classes = unselected, selected. When paired added to pairedUp array, class paired.
+* [X] After 2 cards selected, check if alt-attribute is the same, feedback, cards back to unselected or added to pairedUp array, class paired.
+* [X] Check if all cards are pairedUp, array length = allCards length. If all pairedUp, then winning = true.
+* [ ] When winning = true -> modal
+* [ ] If playAgain = yes, start game again.
+* [ ] If in any time player presses reset, game starts from the beginning and values are reset.
 
 
 # Tech
