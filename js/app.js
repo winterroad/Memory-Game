@@ -1,10 +1,10 @@
 const game = document.getElementById("game-container");
 //All picture's src attributes + alts in an Array.
-const allPictures = ["<img class='unselected' src='img/no1.svg' alt='Number 1'>", "<img class='unselected' src='img/no2.svg' alt='Number 2'>", "<img class='unselected' src='img/no3.svg' alt='Number 3'>",
-"<img class='unselected'src='img/no4.svg' alt='Number 4'>", "<img class='unselected'src='img/no5.svg' alt='Number 5'>", "<img class='unselected'src='img/no6.svg' alt='Number 6'>", "<img class='unselected'src='img/no7.svg' alt='Number 7'>",
-"<img class='unselected'src='img/no8.svg' alt='Number 8'>", "<img class='unselected'src='img/no9.svg' alt='Number 9'>", "<img class='unselected'src='img/no10.svg' alt='Number 10'>", "<img class='unselected'src='img/no11.svg' alt='Number 11'>",
-"<img class='unselected' src='img/no12.svg' alt='Number 12'>", "<img class='unselected' src='img/no13.svg' alt='Number 13'>", "<img class='unselected'src='img/no14.svg' alt='Number 14'>", "<img class='unselected'src='img/no15.svg' alt='Number 15'>",
-"<img class='unselected' src='img/no16.svg' alt='Number 16'>"];
+const allPictures = ["<div class='unselected card'></div><img src='img/no1.svg' alt='Number 1'>", "<div class='unselected card'></div><img src='img/no2.svg' alt='Number 2'>", "<div class='unselected card'></div><img src='img/no3.svg' alt='Number 3'>",
+"<div class='unselected card'></div><img src='img/no4.svg' alt='Number 4'>", "<div class='unselected card'></div><img src='img/no5.svg' alt='Number 5'>", "<div class='unselected card'></div><img src='img/no6.svg' alt='Number 6'>", "<div class='unselected card'></div><img src='img/no7.svg' alt='Number 7'>",
+"<div class='unselected card'></div><img src='img/no8.svg' alt='Number 8'>", "<div class='unselected card'></div><img src='img/no9.svg' alt='Number 9'>", "<div class='unselected card'></div><img src='img/no10.svg' alt='Number 10'>", "<div class='unselected card'></div><img src='img/no11.svg' alt='Number 11'>",
+"<div class='unselected card'></div><img src='img/no12.svg' alt='Number 12'>", "<div class='unselected card'></div><img src='img/no13.svg' alt='Number 13'>", "<div class='unselected card'></div><img src='img/no14.svg' alt='Number 14'>", "<div class='unselected card'></div><img src='img/no15.svg' alt='Number 15'>",
+"<div class='unselected card'></div><img src='img/no16.svg' alt='Number 16'>"];
 const allPicturesNum = allPictures.length;
 let cardsInGame = 8; //how many different cards . CardsInGame x 2 x <div class="card> (Add randomized src + alt here, from chosenPictures Array)<div>
 let chosenPictures = []; //Randomize pictures and add them in this Array.
@@ -20,6 +20,9 @@ chosenPictures = generateRandomPictures(cardsInGame);
 
 //Create a game based  on these pictures.
 createGame(chosenPictures);
+
+//Add evenlistener to parent. With event delegation, no need to assign every child their own listener.
+game.addEventListener('click', chooseCard);
 
 //Function for creating a game.
 function createGame(chosenPictures) {
@@ -46,9 +49,9 @@ function createGame(chosenPictures) {
     let elementToBeAdded = document.createElement("div");
     //Add a card - class, with this should work even with IE 8.
     if (elementToBeAdded.classList) {
-      elementToBeAdded.classList.add("card");
+      elementToBeAdded.classList.add("card-container");
     } else {
-        elementToBeAdded.className += ' ' + "card";
+        elementToBeAdded.className += ' ' + "card-container";
       }
     //Add img info inside div.
     elementToBeAdded.innerHTML = element[0][0];
@@ -85,4 +88,12 @@ function generateRandomPictures(num) {
   }
   //Return the array
   return picArr;
+}
+
+//In choose a card-function card is revealed with class selected, if it is not .selected already.
+function chooseCard(e) {
+  if(e.target && e.target.nodeName == "DIV" && e.target.className == "unselected card"){
+  e.target.classList.add("selected");
+  e.target.classList.remove("unselected");
+  }
 }
