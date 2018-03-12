@@ -20,6 +20,8 @@ let pic1 = "";
 let pic2 = "";
 /*let pairedUp = [];*/
 let winning = false;
+const moveDisplay = document.getElementById("moveDisplay");
+const pairsDisplay = document.getElementById("pairsDisplay");
 
 //Lets select the pictures (1 each). After this these are added to game in randomized order (2 each). -> function createGame().
 chosenPictures = generateRandomPictures(cardsInGame);
@@ -115,13 +117,27 @@ setTimeout(updatingClasses, 250);
 function updatingClasses() {
 
   if (move1!="" && move2!=""){
+    //TODO: Make update moves function.
     moves++;
+    moveDisplay.textContent = moves;
+    //TODO: Make check stars function
+    if(moves >= (cardsInGame * 1.5) && moves < (cardsInGame * 2.5)){
+      starDisplay.textContent = "✰ ✰";
+      stars = 2;
+    } else if(moves >= (cardsInGame * 2.5) && moves < (cardsInGame * 3.5)) {
+      starDisplay.textContent = "✰";
+      stars = 1;
+    } else if(moves >= (cardsInGame * 3.5)) {
+      starDisplay.textContent = 0;
+      stars = 0;
+    }
     move1.classList.remove("selected");
     move2.classList.remove("selected");
   //Check if the moves are the same picture.
   if(pic1 == pic2){
       /*pairedUp.push([pic1, pic2]);*/
       pairsFound++;
+      pairsDisplay.textContent = pairsFound;
       if(pairsFound >= cardsInGame) {
          endTime = Date.now()-startTime;
          winning = true;
