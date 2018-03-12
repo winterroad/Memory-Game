@@ -1,4 +1,4 @@
-# Magnificent Memory Game
+# Great Memory Game
 
 *TODO: Screenshot from the game*
 
