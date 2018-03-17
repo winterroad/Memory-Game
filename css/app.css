@@ -76,13 +76,6 @@ h1{
       .unselected {
         z-index: 50;
         cursor: pointer;
-        /* Delay, so player has time to see the second card.*/
-        -webkit-transition-property: z-index;
-        transition-property: z-index;
-        -webkit-transition-duration: 1s;
-        transition-duration: 1s;
-        -webkit-transition-delay: 0.4s;
-        transition-delay: 0.4s;
       }
 
       .selected {

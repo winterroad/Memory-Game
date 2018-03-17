@@ -1,32 +1,38 @@
 //Game- variable does not change. Cards will be added to game.
 const game = document.getElementById("game-container");
-//All picture related divs, src attributes + alts in an Array.
-const allPictures = ["<div class='card unselected'></div><img src='img/no1.svg' alt='Number 1'>", "<div class='card unselected'></div><img src='img/no2.svg' alt='Number 2'>", "<div class='card unselected'></div><img src='img/no3.svg' alt='Number 3'>",
-"<div class='card unselected'></div><img src='img/no4.svg' alt='Number 4'>", "<div class='card unselected'></div><img src='img/no5.svg' alt='Number 5'>", "<div class='card unselected'></div><img src='img/no6.svg' alt='Number 6'>", "<div class='card unselected'></div><img src='img/no7.svg' alt='Number 7'>",
-"<div class='card unselected'></div><img src='img/no8.svg' alt='Number 8'>", "<div class='card unselected'></div><img src='img/no9.svg' alt='Number 9'>", "<div class='card unselected'></div><img src='img/no10.svg' alt='Number 10'>", "<div class='card unselected'></div><img src='img/no11.svg' alt='Number 11'>",
-"<div class='card unselected'></div><img src='img/no12.svg' alt='Number 12'>", "<div class='card unselected'></div><img src='img/no13.svg' alt='Number 13'>", "<div class='card unselected'></div><img src='img/no14.svg' alt='Number 14'>", "<div class='card unselected'></div><img src='img/no15.svg' alt='Number 15'>",
-"<div class='card unselected'></div><img src='img/no16.svg' alt='Number 16'>"];
-const allPicturesNum = allPictures.length;
-let cardsInGame = 8; //how many different cards . CardsInGame x 2 x <div class="card> (Add randomized src + alt here, from chosenPictures Array)<div>
-let chosenPictures = []; //Randomize pictures and add them in this Array.
-let pairsFound = 0; //In the beginning no pairs found.
-let stars = 3; //Max stars in the beginning.
-let startTime; //Start time, time will start when first click will be made.
-let endTime; //End time, time will stop when pairsFound === cards/2.
-let moves = 0; //Move = 2 cards "turned".
-let move1 = "";
-let move2 = "";
-let pic1 = "";
-let pic2 = "";
-/*let pairedUp = [];*/
-let winning = false;
-const moveDisplay = document.getElementById("moveDisplay");
-const pairsDisplay = document.getElementById("pairsDisplay");
+const moveCounter = document.getElementById("moveCounter");
+const pairsCounter = document.getElementById("pairsCounter");
 const reset = document.getElementById("resetButton");
 
+//All pictures in an array. Includes all the needed html for the "card", including the card div that is the thing that "masks" the picture.
+//TODO: Put this info in a db, mongo db. Pictures fetched with randomized id, which is 1 to [max card id].
+const allPictures = ["<div class='card unselected'></div><img src='img/01-150.png' alt='Long haired kitten. Front profile.'>", "<div class='card unselected'></div><img src='img/02-150.png' alt='A cat and a bag.'>", "<div class='card unselected'></div><img src='img/03-150.png' alt='A kittensleeps below shelf.'>",
+"<div class='card unselected'></div><img src='img/04-150.png' alt='A big happy cat sleeps on a carpet.'>", "<div class='card unselected'></div><img src='img/05-150.png' alt='A cat 5'>", "<div class='card unselected'></div><img src='img/06-150.png' alt='A young, mostly white cat sleeps on the sofa.'>", "<div class='card unselected'></div><img src='img/07-150.png' alt='A long cat sleeps half inside in a bicycle basket.'>",
+"<div class='card unselected'></div><img src='img/08-150.png' alt='A mostly white kitten lays on a sofa and licks his lips.'>", "<div class='card unselected'></div><img src='img/09-150.png' alt='A fat cat sleeps in a roll.'>", "<div class='card unselected'></div><img src='img/10-150.png' alt='A long haired young cat meows.'>", "<div class='card unselected'></div><img src='img/11-150.png' alt='A cat scratches a mat.'>",
+"<div class='card unselected'></div><img src='img/12-150.png' alt='A big cat sleeps on corner and looks happy.'>", "<div class='card unselected'></div><img src='img/13-150.png' alt='A longhaired cat poses like sphynx, side profile.'>", "<div class='card unselected'></div><img src='img/14-150.png' alt='A cat lays on a living room table, partly hanging over.'>", "<div class='card unselected'></div><img src='img/12-150.png' alt='A big cat and a kitten sleep on sofa.'>",
+"<div class='card unselected'></div><img src='img/16-150.png' alt='A cat sleeps in front of a computer display.'>"];
+
+let cardsInGame = 8; //How many different cards . CardsInGame x 2 = all cards in the game.
+let pairsFound;
+let stars;
+let startTime;
+let endTime;
+let moves;
+let move1;
+let move2;
+let pic1;
+let pic2;
+let winning;
+
 init();
+reset.addEventListener('click', resetGame);
 
 function init(){
+
+  updateStartValues();
+  resetMovePic();
+
+  let chosenPictures = [];
   //Lets select the pictures (1 each). After this these are added to game in randomized order (2 each). -> function createGame().
   chosenPictures = generateRandomPictures(cardsInGame);
 
@@ -39,29 +45,49 @@ function init(){
 
 }
 
-function resetGame(){
+function updateStartValues(){
   //Reset values
   pairsFound = 0;
-  pairsDisplay.textContent = pairsFound;
+  pairsCounter.textContent = " " + pairsFound;
   stars = 3;
-  starDisplay.textContent =  "✰ ✰ ✰";
+  starsCounter.textContent =  " ✰ ✰ ✰ ";
   endTime = 0;
   moves = 0;
-  moveDisplay.textContent = moves;
+  moveCounter.textContent = " " + moves;
+  winning = false;
+}
+
+function resetMovePic(){
   move1 = "";
   move2 = "";
   pic1 = "";
   pic2 = "";
-
-  //Reset board
-  while (game.firstChild) {
-    game.removeChild(game.firstChild);
-  }
-  //create a new game
-  init();
 }
 
-reset.addEventListener('click', resetGame);
+//Generate chosenPicture-array (includes picture once).
+function generateRandomPictures(num){
+  //Empty array for randomized pic-info
+  let picArr = [];
+  let picture = "";
+  //Lets copy info from the original pic array, so the original array is not modified.
+  let arrayForRandomizing = allPictures.slice(0);
+  let randomArraySize;
+
+  //Repeat num times (cardsInGame)
+  for(let i=0; i < num; i++){
+    //As arrayForRandomizing-array's size changes, the size is checked before creating random index.
+    randomArraySize = arrayForRandomizing.length;
+    //Lets randomize index (for getting a pic-info from array, random is multiplied by no between 0 - randomArraySize,
+    //floor will round the no down, random will create no between 0 and up to but not inclunding 1)
+    let picIndex = Math.floor(Math.random()*randomArraySize);
+    //Let's use the index to get pic-info from array, then the item in that index will be removed, so it it will not be used again in the game.
+    picture = arrayForRandomizing.splice(picIndex, 1);
+    //Push picture-info into picArr
+    picArr.push(picture);
+  }
+  //Return the array
+  return picArr;
+}
 
 //Function for creating a game.
 function createGame(chosenPictures){
@@ -100,29 +126,13 @@ function createGame(chosenPictures){
   game.appendChild(fragment);
 }
 
-//Generate chosenPicture-array (includes picture once).
-function generateRandomPictures(num){
-  //Empty array for randomized pic-info
-  let picArr = [];
-  let picture = "";
-  //Lets copy info from the original pic array, so the original array is not modified.
-  let arrayForRandomizing = allPictures.slice(0);
-  let randomArraySize;
-
-  //Repeat num times (cardsInGame)
-  for(let i=0; i < num; i++){
-    //As arrayForRandomizing-array's size changes, the size is checked before creating random index.
-    randomArraySize = arrayForRandomizing.length;
-    //Lets randomize index (for getting a pic-info from array, random is multiplied by no between 0 - randomArraySize,
-    //floor will round the no down, random will create no between 0 and up to but not inclunding 1)
-    let picIndex = Math.floor(Math.random()*randomArraySize);
-    //Let's use the index to get pic-info from array, then the item in that index will be removed, so it it will not be used again in the game.
-    picture = arrayForRandomizing.splice(picIndex, 1);
-    //Push picture-info into picArr
-    picArr.push(picture);
+function resetGame(){
+  //Reset board, did not use remove (node.remove()) as IE does not understand it. So going old school.
+  while (game.firstChild) {
+    game.removeChild(game.firstChild);
   }
-  //Return the array
-  return picArr;
+  //create a new game
+  init();
 }
 
 //In choose a card-function card is revealed with class selected, if it is not .selected already.
@@ -136,12 +146,25 @@ function chooseCard(e) {
       move1 = e.target;
       pic1 = move1.nextSibling.alt;
     } else if (move2==="") {
-      move2 = e.target;
-      pic2 = move2.nextSibling.alt;;
-    }
+        move2 = e.target;
+        pic2 = move2.nextSibling.alt;
+      }
 
-setTimeout(updatingClasses, 0);
+    //Setting timeout so player has time to see the other card.
+    setTimeout(updatingClasses, 500);
+} }
 
+function checkScore(){
+  if(moves >= (cardsInGame * 1.75) && moves < (cardsInGame * 2.5)){
+    starsCounter.textContent = " ✰ ✰ ";
+    stars = 2;
+  } else if(moves >= (cardsInGame * 2.5) && moves < (cardsInGame * 3.75)) {
+    starsCounter.textContent = " ✰ ";
+    stars = 1;
+  } else if(moves >= (cardsInGame * 3.75)) {
+    starsCounter.textContent = " " + 0 + " ";
+    stars = 0;
+  }
 }
 
 function updatingClasses() {
@@ -149,40 +172,24 @@ function updatingClasses() {
   if (move1!="" && move2!=""){
     //TODO: Make update moves function.
     moves++;
-    moveDisplay.textContent = moves;
-    //TODO: Make check stars function
-    if(moves >= (cardsInGame * 1.5) && moves < (cardsInGame * 2.25)){
-      starDisplay.textContent = "✰ ✰";
-      stars = 2;
-    } else if(moves >= (cardsInGame * 2.25) && moves < (cardsInGame * 3.5)) {
-      starDisplay.textContent = "✰";
-      stars = 1;
-    } else if(moves >= (cardsInGame * 3.5)) {
-      starDisplay.textContent = 0;
-      stars = 0;
-    }
+    moveCounter.textContent = " " + moves + " ";
+    checkScore();
     move1.classList.remove("selected");
     move2.classList.remove("selected");
   //Check if the moves are the same picture.
   if(pic1 == pic2){
-      /*pairedUp.push([pic1, pic2]);*/
       pairsFound++;
-      pairsDisplay.textContent = pairsFound;
+      move1.classList.add("paired");
+      move2.classList.add("paired");
+      pairsCounter.textContent = " " + pairsFound + " ";
       if(pairsFound >= cardsInGame) {
          endTime = Date.now()-startTime;
          winning = true;
       }
-      move1.classList.add("paired");
-      move2.classList.add("paired");
   } else {
-    move1.classList.add("unselected");
-    move2.classList.add("unselected");
+      move1.classList.add("unselected");
+      move2.classList.add("unselected");
   }
-    move1 = "";
-    move2 = "";
-    pic1 = "";
-    pic2 = "";
+  resetMovePic();
   }
   }
-
-}

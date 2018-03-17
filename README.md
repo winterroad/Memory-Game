@@ -10,7 +10,7 @@ Magnificent Memory Game is a project for [Udacity Front-End Web Developer Nanode
 | ------------- |-------------| -----|
 | Memory Game Logic   | Cards have been randomized, there is 2 each, game is over when all pairs have been found | Done. |
 | Congratulations pop-up-window    | When all pairs have been found pop-up window appears. It includes: congratulation-message, want to play again? - question, timer value and stars.      |   |
-| Restart Game | A reset function resets the game board, the timer, and the star rating.    |     |
+| Restart Game | A reset function resets the game board, the timer, and the star rating.    |  Done.  |
 | Star Rating / Points | 1 - 3 stars, 3 is best score. Ratings should depend on the moves/time it took to complete the game.      |  Done.  |
 | Timer | Timer starts when game starts and stops when all the pairs have been found.    |   Done. |
 | Move Counter | How many card pairs have been revealed   |    2 cards = one move, done. |
@@ -21,7 +21,7 @@ Magnificent Memory Game is a project for [Udacity Front-End Web Developer Nanode
 | Element    | Purpose     |  Amount|
 |:-------------:|:-------------:| :-----:|
 | Cards   | Essential for game play  | 8+ |
-| Pictures      | Differentiate cards  |  16 + |
+| (Cat) Pictures      | Differentiate cards  |  16 + |
 | Stars | For score    |    0-3 |
 | Moves | Stars are based on this.    |  One show moves - element   |
 | Start/End Time| To make a timer    |    1 each |
@@ -42,9 +42,9 @@ Magnificent Memory Game is a project for [Udacity Front-End Web Developer Nanode
 * [X] Pairs (start value) = 0, pairs checked after a move, if cards "match", view updated +1.
 * [X] Status: winning = false
 * [X] When game board ready start timer -> [set start time](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
-* [X] Move functionality: one move is 2 cards visible (2 cards clicked), classes = unselected, selected. When paired added to pairedUp array, class  paired.
-* [X] After 2 cards selected, check if alt-attribute is the same, feedback, cards back to unselected or added to pairedUp array, class paired.
-* [X] Check if all cards are pairedUp, array length = allCards length / pairedUp - counter. If all pairedUp, then winning = true.
+* [X] Move functionality: one move is 2 cards visible (2 cards clicked), classes = unselected, selected. If cards alt-texts match, class  paired. Counter updated.
+* [X] After 2 cards selected, check if alt-attribute is the same, feedback, cards back to unselected or add class paired.
+* [X] Check if all cards are pairedUp (paired counter). If all pairedUp, then winning = true.
 * [ ] When winning = true -> modal
 * [ ] If playAgain = yes, start game again. Reset needed.
 * [X] If in any time player presses reset, game starts from the beginning and values (stars, moves, pairs, winning = false, start and end time = 0) are reset and cards will be randomized and new cards will be shown.
