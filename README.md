@@ -47,7 +47,7 @@ Magnificent Memory Game is a project for [Udacity Front-End Web Developer Nanode
 * [X] Check if all cards are pairedUp, array length = allCards length / pairedUp - counter. If all pairedUp, then winning = true.
 * [ ] When winning = true -> modal
 * [ ] If playAgain = yes, start game again. Reset needed.
-* [ ] If in any time player presses reset, game starts from the beginning and values (stars, moves, pairs, winning = false, start and end time = 0) are reset and cards will be randomized again.
+* [X] If in any time player presses reset, game starts from the beginning and values (stars, moves, pairs, winning = false, start and end time = 0) are reset and cards will be randomized and new cards will be shown.
 
 
 # Tech

@@ -1,4 +1,4 @@
-//Game- varibale doe snot change. Cards will be added to game.
+//Game- variable does not change. Cards will be added to game.
 const game = document.getElementById("game-container");
 //All picture related divs, src attributes + alts in an Array.
 const allPictures = ["<div class='card unselected'></div><img src='img/no1.svg' alt='Number 1'>", "<div class='card unselected'></div><img src='img/no2.svg' alt='Number 2'>", "<div class='card unselected'></div><img src='img/no3.svg' alt='Number 3'>",
@@ -22,16 +22,46 @@ let pic2 = "";
 let winning = false;
 const moveDisplay = document.getElementById("moveDisplay");
 const pairsDisplay = document.getElementById("pairsDisplay");
+const reset = document.getElementById("resetButton");
 
-//Lets select the pictures (1 each). After this these are added to game in randomized order (2 each). -> function createGame().
-chosenPictures = generateRandomPictures(cardsInGame);
+init();
 
-//Create a game based  on these pictures.
-createGame(chosenPictures);
-startTime = Date.now();
+function init(){
+  //Lets select the pictures (1 each). After this these are added to game in randomized order (2 each). -> function createGame().
+  chosenPictures = generateRandomPictures(cardsInGame);
 
-//Add evenlistener to parent. With event delegation, no need to assign every child their own listener.
-game.addEventListener('click', chooseCard);
+  //Create a game based  on these pictures.
+  createGame(chosenPictures);
+  startTime = Date.now();
+
+  //Add evenlistener to parent. With event delegation, no need to assign every child their own listener.
+  game.addEventListener('click', chooseCard);
+
+}
+
+function resetGame(){
+  //Reset values
+  pairsFound = 0;
+  pairsDisplay.textContent = pairsFound;
+  stars = 3;
+  starDisplay.textContent =  "✰ ✰ ✰";
+  endTime = 0;
+  moves = 0;
+  moveDisplay.textContent = moves;
+  move1 = "";
+  move2 = "";
+  pic1 = "";
+  pic2 = "";
+
+  //Reset board
+  while (game.firstChild) {
+    game.removeChild(game.firstChild);
+  }
+  //create a new game
+  init();
+}
+
+reset.addEventListener('click', resetGame);
 
 //Function for creating a game.
 function createGame(chosenPictures){
@@ -110,7 +140,7 @@ function chooseCard(e) {
       pic2 = move2.nextSibling.alt;;
     }
 
-setTimeout(updatingClasses, 250);
+setTimeout(updatingClasses, 0);
 
 }
 
@@ -121,10 +151,10 @@ function updatingClasses() {
     moves++;
     moveDisplay.textContent = moves;
     //TODO: Make check stars function
-    if(moves >= (cardsInGame * 1.5) && moves < (cardsInGame * 2.5)){
+    if(moves >= (cardsInGame * 1.5) && moves < (cardsInGame * 2.25)){
       starDisplay.textContent = "✰ ✰";
       stars = 2;
-    } else if(moves >= (cardsInGame * 2.5) && moves < (cardsInGame * 3.5)) {
+    } else if(moves >= (cardsInGame * 2.25) && moves < (cardsInGame * 3.5)) {
       starDisplay.textContent = "✰";
       stars = 1;
     } else if(moves >= (cardsInGame * 3.5)) {
