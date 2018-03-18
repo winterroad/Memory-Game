@@ -3,29 +3,45 @@ const game = document.getElementById("game-container");
 const moveCounter = document.getElementById("moveCounter");
 const pairsCounter = document.getElementById("pairsCounter");
 const reset = document.getElementById("resetButton");
+const time = document.getElementById("time");
+
+//For modal, TODO: will be deleted when not needed anymore
+const popUp = document.querySelector(".popUpWindow");
+const overlay = document.querySelector(".overlay");
+const pairsModal = document.getElementById("pairContainer");
+const movesModal = document.getElementById("moveContainer");
+const starsModal = document.getElementById("starContainer");
+const timeModal = document.getElementById("timeContainer");
+const playAgainModal = document.getElementById("playAgain");
+const closeModal = document.querySelector(".close");
+//END FOR MODAL
 
 //All pictures in an array. Includes all the needed html for the "card", including the card div that is the thing that "masks" the picture.
 //TODO: Put this info in a db, mongo db. Pictures fetched with randomized id, which is 1 to [max card id].
+//TODO: Smaller pictures, 100 X 100 as a option.
 const allPictures = ["<div class='card unselected'></div><img src='img/01-150.png' alt='Long haired kitten. Front profile.'>", "<div class='card unselected'></div><img src='img/02-150.png' alt='A cat and a bag.'>", "<div class='card unselected'></div><img src='img/03-150.png' alt='A kittensleeps below shelf.'>",
 "<div class='card unselected'></div><img src='img/04-150.png' alt='A big happy cat sleeps on a carpet.'>", "<div class='card unselected'></div><img src='img/05-150.png' alt='A cat 5'>", "<div class='card unselected'></div><img src='img/06-150.png' alt='A young, mostly white cat sleeps on the sofa.'>", "<div class='card unselected'></div><img src='img/07-150.png' alt='A long cat sleeps half inside in a bicycle basket.'>",
 "<div class='card unselected'></div><img src='img/08-150.png' alt='A mostly white kitten lays on a sofa and licks his lips.'>", "<div class='card unselected'></div><img src='img/09-150.png' alt='A fat cat sleeps in a roll.'>", "<div class='card unselected'></div><img src='img/10-150.png' alt='A long haired young cat meows.'>", "<div class='card unselected'></div><img src='img/11-150.png' alt='A cat scratches a mat.'>",
-"<div class='card unselected'></div><img src='img/12-150.png' alt='A big cat sleeps on corner and looks happy.'>", "<div class='card unselected'></div><img src='img/13-150.png' alt='A longhaired cat poses like sphynx, side profile.'>", "<div class='card unselected'></div><img src='img/14-150.png' alt='A cat lays on a living room table, partly hanging over.'>", "<div class='card unselected'></div><img src='img/16-150.png' alt='A big cat and a kitten sleep on sofa.'>",
+"<div class='card unselected'></div><img src='img/12-150.png' alt='A big cat sleeps on corner and looks happy.'>", "<div class='card unselected'></div><img src='img/13-150.png' alt='A longhaired cat poses like sphynx, side profile.'>", "<div class='card unselected'></div><img src='img/14-150.png' alt='A cat lays on a living room table, partly hanging over.'>", "<div class='card unselected'></div><img src='img/15-150.png' alt='A big cat and a kitten sleep on sofa.'>",
 "<div class='card unselected'></div><img src='img/16-150.png' alt='A cat sleeps in front of a computer display.'>"];
 
 let cardsInGame = 8; //How many different cards . CardsInGame x 2 = all cards in the game.
 let pairsFound;
 let stars;
 let startTime;
-let endTime;
 let moves;
 let move1;
 let move2;
 let pic1;
 let pic2;
-let winning;
+
+
 
 init();
 reset.addEventListener('click', resetGame);
+
+//Add evenlistener to parent. With event delegation, no need to assign every child their own listener.
+game.addEventListener('click', chooseCard);
 
 function init(){
 
@@ -39,10 +55,6 @@ function init(){
   //Create a game based  on these pictures.
   createGame(chosenPictures);
   startTime = Date.now();
-
-  //Add evenlistener to parent. With event delegation, no need to assign every child their own listener.
-  game.addEventListener('click', chooseCard);
-
 }
 
 function updateStartValues(){
@@ -54,6 +66,7 @@ function updateStartValues(){
   endTime = 0;
   moves = 0;
   moveCounter.textContent = " " + moves;
+  time.textContent = " ";
   winning = false;
 }
 
@@ -155,6 +168,7 @@ function chooseCard(e) {
 } }
 
 function checkScore(){
+  //Change to inline
   if(moves >= (cardsInGame * 1.75) && moves < (cardsInGame * 2.5)){
     starsCounter.textContent = " ✰ ✰ ";
     stars = 2;
@@ -182,9 +196,13 @@ function updatingClasses() {
       move1.classList.add("paired");
       move2.classList.add("paired");
       pairsCounter.textContent = " " + pairsFound + " ";
+
       if(pairsFound >= cardsInGame) {
-         endTime = Date.now()-startTime;
-         winning = true;
+         let endTime = Date.now()-startTime;
+         endTime = convertMillis(endTime);
+         time.textContent = "You finished in " + endTime;
+         updateModalValues(pairsFound, moves, stars, endTime);
+         showPopUp();
       }
   } else {
       move1.classList.add("unselected");
@@ -193,3 +211,57 @@ function updatingClasses() {
   resetMovePic();
   }
   }
+
+
+  function convertMillis(ms){
+    //Whole minutes are milliseconds divided by 60000 rounded by Math-floor to whole minutes.
+    let mins = Math.floor(ms/60000);
+    //Whole seconds are modulo (remainder) rounded by Math.floor down by nearest whole minute. The secs are reminder, when whole mins have been counted.
+    let secs = Math.floor(ms%60000/1000);
+
+    //If the seconds is under 10, then 0 before the secs, if secs is over 10, then add "nothing".
+    return (mins + ":" + (secs < 10 ? "0" : "") + secs);
+
+    //Above ternary returns the "same" as if/else below
+    //endTime
+    //if(secs < 10){
+    //   return mins + ":" + "0" + secs;
+    //} else{
+    //   mins + ":" + secs;
+      //}
+  }
+
+//FOR MODAL, WILL BE DELETED WHEN NOT NEEDED ANYMORE
+function showPopUp(){
+  if (popUp.classList){
+    popUp.classList.add("showPopUp");
+    overlay.classList.add("showPopUp");
+  //This is for older IE.
+  } else {
+      popUp.className += ' ' + "showPopUp";
+      overlay.className += ' ' + "showPopUp";
+    }
+
+  playAgainModal.addEventListener('click', doPlayAgain);
+  closeModal.addEventListener('click', closePopUp);
+}
+
+function updateModalValues(pairs, moves, stars, time){
+  pairsModal.textContent = pairs;
+  movesModal.textContent = moves;
+  starsModal.textContent = stars;
+  timeModal.textContent = time;
+  //playAgainModal
+
+}
+
+function closePopUp(){
+  popUp.classList.remove("showPopUp");
+  overlay.classList.remove("showPopUp");
+}
+
+function doPlayAgain(){
+  resetGame();
+  closePopUp();
+}
+//END MODAL

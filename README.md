@@ -1,8 +1,8 @@
-# Great Memory Game
+# Great Cat Memory Game
 
 *TODO: Screenshot from the game*
 
-Magnificent Memory Game is a project for [Udacity Front-End Web Developer Nanodegree](https://eu.udacity.com/course/front-end-web-developer-nanodegree--nd001)
+Great Cat Memory Game is a project for [Udacity Front-End Web Developer Nanodegree](https://eu.udacity.com/course/front-end-web-developer-nanodegree--nd001)
 
 ## Functionality Requirements
 
@@ -25,7 +25,7 @@ Magnificent Memory Game is a project for [Udacity Front-End Web Developer Nanode
 | Stars | For score    |    0-3 |
 | Moves | Stars are based on this.    |  One show moves - element   |
 | Start/End Time| To make a timer    |    1 each |
-| Modal | Includes Gongrats, scores and playAgain? which are required    |   1 |
+| Modal | Includes scores and playAgain? which are required    |   1 |
 
 ## Style Requirements
 
@@ -44,9 +44,9 @@ Magnificent Memory Game is a project for [Udacity Front-End Web Developer Nanode
 * [X] When game board ready start timer -> [set start time](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now)
 * [X] Move functionality: one move is 2 cards visible (2 cards clicked), classes = unselected, selected. If cards alt-texts match, class  paired. Counter updated.
 * [X] After 2 cards selected, check if alt-attribute is the same, feedback, cards back to unselected or add class paired.
-* [X] Check if all cards are pairedUp (paired counter). If all pairedUp, then winning = true.
-* [ ] When winning = true -> modal
-* [ ] If playAgain = yes, start game again. Reset needed.
+* [X] Check if all cards are pairedUp (paired counter).
+* [X] When pairsFound = CardsInGame -> modal
+* [X] If playAgain = yes, start game again (includes reset and init).
 * [X] If in any time player presses reset, game starts from the beginning and values (stars, moves, pairs, winning = false, start and end time = 0) are reset and cards will be randomized and new cards will be shown.
 
 
@@ -67,6 +67,11 @@ Magnificent Memory Game is a project for [Udacity Front-End Web Developer Nanode
 - Leader board (MongoDB)
 - Local Storage
 
+
+## Known Bugs
+
+- When cards are clicked with fast pace, sometimes card can be left in selected state. This probably is because update in updatingClasses
+do not have time to run before the move1 and/or move2 values have been updated (chooseCard function is higher in the execute stack).
 
 > If I would need a
 > awesome quote.
