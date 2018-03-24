@@ -1,6 +1,8 @@
 # Great Cat Memory Game
 
-*TODO: Screenshot from the game*
+Pictures from the game:
+- [Start](https://github.com/winterroad/Memory-Game/blob/master/img/memoryGameScreenshot01.png)
+- [The End]()
 
 Great Cat Memory Game is a project for [Udacity Front-End Web Developer Nanodegree](https://eu.udacity.com/course/front-end-web-developer-nanodegree--nd001)
 
