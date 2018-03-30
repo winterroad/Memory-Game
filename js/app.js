@@ -20,7 +20,6 @@ const CLOSEMODAL = document.querySelector(".close");
 
 //All pictures in an array. Includes all the needed html for the "card", including the card div that is the thing that "masks" the picture.
 //TODO: Put this info in a db, mongo db. Pictures fetched with randomized id, which is 1 to [max card id].
-//TODO: Smaller pictures, 100 X 100 as a option.
 
 const ALL_PICTURES = [
   "<div class='card unselected'></div><img src='img/01-150.png' alt='Long haired kitten. Front profile.'>",
