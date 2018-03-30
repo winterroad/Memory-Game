@@ -273,14 +273,13 @@ function checkScore(){
 
 //When all pairs are found,
 function allPairsFound(){
-  TIME.textContent = timerValue;
   clearInterval(countingUp);
   updateModalValues(pairsFound, moves, stars, timerValue);
   showPopUp();
 }
 
 function resetGame(){
-  //Reset board, did not use remove (node.remove()) as IE does not understand it. So going old school.
+  //Reset board, did not use remove (node.remove()) as IE does not understand it. So going old school. Remove child elements as long as there is one.
   while (GAME.firstChild){
     GAME.removeChild(GAME.firstChild);
   }
